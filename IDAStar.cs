@@ -12,22 +12,21 @@ namespace IDAStar
         public Wezel start;
         public Wezel koniec;
         public int wezlyOdwiedzone;
-        public Grid grid;
+        public Labirynt labirynt;
         public List<Wezel> sciezka = new List<Wezel>();
 
-        public IDAStar(int startX, int startY, int koniecX, int koniecY, Grid grid, Heurystyka heur)
+        public IDAStar(int startX, int startY, int koniecX, int koniecY, Labirynt labirynt, Heurystyka heur)
         {
-            this.heurystyka = heur;
-            this.start = grid.getWezel(startX, startY);
-            this.koniec = grid.getWezel(koniecX, koniecY);
-            this.grid = grid;
-            this.wezlyOdwiedzone = 0;
-
+            heurystyka = heur;
+            start = labirynt.getWezel(startX, startY);
+            koniec = labirynt.getWezel(koniecX, koniecY);
+            this.labirynt = labirynt;
+            wezlyOdwiedzone = 0;
         }
 
         public double obliczHeurystyke(Wezel a, Wezel b)
         {
-            return this.heurystyka.manhattan(Math.Abs(b.x - a.x), Math.Abs(b.y - a.y));
+            return heurystyka.manhattan(Math.Abs(b.x - a.x), Math.Abs(b.y - a.y));
             //if(){
 
             //}
@@ -61,7 +60,7 @@ namespace IDAStar
             Object t;
             Wezel sasiad;
 
-            Wezel[] sasiedzi = grid.pobierzSasiadow(wezel);
+            Wezel[] sasiedzi = labirynt.pobierzSasiadow(wezel);
 
             for (int k = 0; k < sasiedzi.Length; ++k)
             {
@@ -100,7 +99,7 @@ namespace IDAStar
             return min;
         }
 
-        public List<Wezel> szukajSciezki(int startX, int startY, int koniecX, int koniecY, Grid grid)
+        public List<Wezel> szukajSciezki(int startX, int startY, int koniecX, int koniecY, Labirynt labirynt)
         {
             //this.wezlyOdwiedzone = 0;
             //this.start = new Wezel(startX,startY);
@@ -126,6 +125,11 @@ namespace IDAStar
                         sciezka.Clear();
                         return new List<Wezel>();
                     }
+                    else
+                    {
+                        double d = (Double)t;
+                        maxGlebokosc = d;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -138,7 +142,7 @@ namespace IDAStar
                     {
                         Console.WriteLine("Wezel w find");
                         Console.WriteLine(exc.ToString());
-                        try
+                        /*try
                         {
                             double d = (Double)t;
                             maxGlebokosc = d;
@@ -147,7 +151,7 @@ namespace IDAStar
                         {
                             Console.WriteLine("double w find");
                             Console.WriteLine(excep.ToString());
-                        }
+                        }*/
                     }
                 }
             }

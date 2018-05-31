@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace IDAStar
 {
-    public class Grid
+    public class Labirynt
     {
         public int wymiar;
         public Wezel[,] wezly;
 
-        public Grid(int wymiar)
+        public Labirynt(int wymiar)
         {
             this.wymiar = wymiar;
             wezly = stworzWezly(wymiar);
@@ -59,22 +59,22 @@ namespace IDAStar
             List<Wezel> listaSasiadow = new List<Wezel>();
             Wezel[,] wezly = this.wezly;
 
-            // ↑
+            // Gora
             if (this.jestOdblokowane(x, y - 1))
             {
                 listaSasiadow.Add(wezly[y - 1, x]);
             }
-            // →
+            // Prawo
             if (this.jestOdblokowane(x + 1, y))
             {
                 listaSasiadow.Add(wezly[y, x + 1]);
             }
-            // ↓
+            // Dol
             if (this.jestOdblokowane(x, y + 1))
             {
                 listaSasiadow.Add(wezly[y + 1, x]);
             }
-            // ←
+            // Lewo
             if (this.jestOdblokowane(x - 1, y))
             {
                 listaSasiadow.Add(wezly[y, x - 1]);
@@ -90,13 +90,13 @@ namespace IDAStar
             return sasiedzi;
         }
 
-        public Grid kopiuj()
+        public Labirynt kopiuj()
         {
 
             int wymiar = this.wymiar;
             Wezel[,] stareWezly = this.wezly;
 
-            Grid nowyGrid = new Grid(wymiar);
+            Labirynt nowyLabirynt = new Labirynt(wymiar);
             Wezel[,] noweWezly = new Wezel[wymiar, wymiar];
 
             for (int i = 0; i < wymiar; ++i)
@@ -107,9 +107,9 @@ namespace IDAStar
                 }
             }
 
-            nowyGrid.wezly = noweWezly;
+            nowyLabirynt.wezly = noweWezly;
 
-            return nowyGrid;
+            return nowyLabirynt;
         }
 
         public void wypisz()

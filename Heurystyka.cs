@@ -22,12 +22,6 @@ namespace IDAStar
             return Math.Sqrt(x * x + y * y);
         }
 
-        public double octile(double x, double y)
-        {
-            double f = Math.Sqrt(2.0) - 1;
-            return (x < y) ? f * x + y : f * y + x;
-        }
-
         public double chebyshev(double x, double y)
         {
             return Math.Max(x, y);
