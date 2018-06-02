@@ -94,7 +94,7 @@ namespace IDAStar
         {
 
             int wymiar = this.wymiar;
-            Wezel[,] stareWezly = this.wezly;
+            Wezel[,] stareWezly = wezly;
 
             Labirynt nowyLabirynt = new Labirynt(wymiar);
             Wezel[,] noweWezly = new Wezel[wymiar, wymiar];
@@ -114,13 +114,26 @@ namespace IDAStar
 
         public void wypisz()
         {
-            for (int i = 0; i < this.wymiar; ++i)
+            for (int i = 0; i < wymiar; ++i)
             {
-                for (int j = 0; j < this.wymiar; ++j)
+                for (int j = 0; j < wymiar; ++j)
                 {
-                    Console.WriteLine(this.wezly[i, j].x + " " + this.wezly[i, j].y + " " + this.wezly[i, j].odblokowane);
+                    Console.WriteLine(wezly[i, j].x + " " + wezly[i, j].y + " " + wezly[i, j].odblokowane);
                 }
             }
+        }
+
+        public List<Wezel> pobierzZablokowane()
+        {
+            List<Wezel> lista = new List<Wezel>();
+            foreach(Wezel w in wezly)
+            {
+                if (!w.odblokowane)
+                {
+                    lista.Add(w);
+                }
+            }
+            return lista;
         }
     }
 
