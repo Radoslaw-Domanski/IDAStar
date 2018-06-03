@@ -20,11 +20,6 @@ namespace IDAStar
             this.y = y;
             this.odblokowane = odblokowane;
         }
-
-        public void test()
-        {
-            //Console.Write("test");
-        }
     }
 
 }

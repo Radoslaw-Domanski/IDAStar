@@ -33,7 +33,7 @@ namespace IDAStar
 
         public Wezel getWezel(int x, int y)
         {
-            return this.wezly[y, x];
+            return wezly[y, x];
         }
 
         public bool jestOdblokowane(int x, int y)
@@ -60,22 +60,22 @@ namespace IDAStar
             Wezel[,] wezly = this.wezly;
 
             // Gora
-            if (this.jestOdblokowane(x, y - 1))
+            if (jestOdblokowane(x, y - 1))
             {
                 listaSasiadow.Add(wezly[y - 1, x]);
             }
             // Prawo
-            if (this.jestOdblokowane(x + 1, y))
+            if (jestOdblokowane(x + 1, y))
             {
                 listaSasiadow.Add(wezly[y, x + 1]);
             }
             // Dol
-            if (this.jestOdblokowane(x, y + 1))
+            if (jestOdblokowane(x, y + 1))
             {
                 listaSasiadow.Add(wezly[y + 1, x]);
             }
             // Lewo
-            if (this.jestOdblokowane(x - 1, y))
+            if (jestOdblokowane(x - 1, y))
             {
                 listaSasiadow.Add(wezly[y, x - 1]);
             }
@@ -110,17 +110,6 @@ namespace IDAStar
             nowyLabirynt.wezly = noweWezly;
 
             return nowyLabirynt;
-        }
-
-        public void wypisz()
-        {
-            for (int i = 0; i < wymiar; ++i)
-            {
-                for (int j = 0; j < wymiar; ++j)
-                {
-                    Console.WriteLine(wezly[i, j].x + " " + wezly[i, j].y + " " + wezly[i, j].odblokowane);
-                }
-            }
         }
 
         public List<Wezel> pobierzZablokowane()

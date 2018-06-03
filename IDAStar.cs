@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IDAStar
 {
-    public class IDAStar //: INotifyCollectionChanged
+    public class IDAStar
     {
         public Heurystyka heurystyka;
         public string wybranaHeurystyka;
@@ -20,11 +20,12 @@ namespace IDAStar
         public Labirynt labirynt;
         public List<Wezel> sciezka = new List<Wezel>();
         public double kosztAkcji;
-        public event EventHandler SomethingHappened;
+        public event EventHandler zglosZdarzenie;
         public List<Wezel> testowane = new List<Wezel>();
         public int opoznienie,iloscPowodzen,iloscNiepowodzen,lacznaDlugoscSciezki;
         public bool uplynalCzasWykonywania = false;
-        //,resetowanaSciezka
+        public DateTime czasKoncowy;
+        public int maxCzasWykonania;
 
         public IDAStar(int startX, int startY, int koniecX, int koniecY, Labirynt labirynt, string wybranaHeurystyka, double kosztAkcji = 1.0, int opoznienie = 0)
         {
@@ -36,10 +37,10 @@ namespace IDAStar
             koniec = labirynt.getWezel(koniecX, koniecY);
             this.labirynt = labirynt;
             wezlyOdwiedzone = 0;
-            //resetowanaSciezka = 0;
             iloscPowodzen = 0;
             iloscNiepowodzen = 0;
             lacznaDlugoscSciezki = 0;
+            maxCzasWykonania = 0;
         }
 
         public double obliczHeurystyke(Wezel a, Wezel b)
@@ -62,6 +63,12 @@ namespace IDAStar
 
         public Object szukaj(Wezel wezel, double g, double maxGlebokosc, int glebokosc)
         {
+            if (maxCzasWykonania != 0 && DateTime.Compare(DateTime.Now, czasKoncowy) > 0)
+            {
+                uplynalCzasWykonywania = true;
+                return new List<Wezel>();
+            }
+
             wezlyOdwiedzone++;
 
             double f = g + obliczHeurystyke(wezel, koniec) * kosztAkcji;
@@ -94,7 +101,7 @@ namespace IDAStar
 
                 if (opoznienie > 0)
                 {
-                    SomethingHappened(testowane, null);
+                    zglosZdarzenie(testowane, null);
                     Thread.Sleep(opoznienie);
                 }
                 
@@ -110,7 +117,6 @@ namespace IDAStar
                 }
                 catch (Exception exc) // Double
                 {
-                    //Console.WriteLine("outside " + exc.ToString());
                     try
                     {
                         iloscNiepowodzen++;
@@ -118,7 +124,7 @@ namespace IDAStar
                         lacznaDlugoscSciezki += testowane.Count;
                         if (opoznienie > 0)
                         {
-                            SomethingHappened(testowane, null);
+                            zglosZdarzenie(testowane, null);
                             Thread.Sleep(opoznienie);
                         }
                         double x = (Double)t;
@@ -128,19 +134,19 @@ namespace IDAStar
                         }
                     }
                     catch(Exception ex){ // nic z powyzszych
-                        //Console.WriteLine("inside " + ex.ToString()); 
                     }
                 }
             }
             return min;
         }
 
-        public List<Wezel> szukajSciezki(int startX, int startY, int koniecX, int koniecY, Labirynt labirynt, int maxCzasWykonywania = 30000)
+        public List<Wezel> szukajSciezki(int startX, int startY, int koniecX, int koniecY, Labirynt labirynt, int maxCzasWykonywania = 0)
         {
-            DateTime czasKoncowy = DateTime.Now; 
-            if (maxCzasWykonywania != 0)
+            maxCzasWykonania = maxCzasWykonywania;
+
+            if (maxCzasWykonania != 0)
             {
-                czasKoncowy = DateTime.Now.AddMilliseconds(maxCzasWykonywania);
+                czasKoncowy = DateTime.Now.AddSeconds(maxCzasWykonywania);
             }
             
             double maxGlebokosc = obliczHeurystyke(start, koniec) * kosztAkcji;
@@ -150,14 +156,13 @@ namespace IDAStar
             for (;;)
             {
                 // przekroczono max czas wykonania - 30sek
-                if(maxCzasWykonywania != 0 && DateTime.Compare(DateTime.Now,czasKoncowy) > 0)
+                if(maxCzasWykonania != 0 && DateTime.Compare(DateTime.Now,czasKoncowy) > 0)
                 {
                     uplynalCzasWykonywania = true;
                     return new List<Wezel>();
                 }
 
                 sciezka.Clear();
-                //resetowanaSciezka++;
 
                 t = szukaj(start, 0, maxGlebokosc, 0);
 
@@ -165,12 +170,9 @@ namespace IDAStar
                 {
                     double doub = (Double)t;
                     
-                    //Console.WriteLine(doub + " " + Double.MaxValue + " " + doub.Equals(Double.MaxValue));
-                    //Console.WriteLine(Double.IsPositiveInfinity(doub) + " " + doub);
                     if (Double.IsPositiveInfinity(doub))
                     {
                         sciezka.Clear();
-                        //resetowanaSciezka++;
                         iloscNiepowodzen++;
                         return new List<Wezel>();
                     }
@@ -182,8 +184,6 @@ namespace IDAStar
                 }
                 catch (Exception e) // Wezel
                 {
-                    //Console.WriteLine("double w find");
-                    //Console.WriteLine(e.ToString());
                     try
                     {
                         Wezel x = (Wezel)t;
@@ -192,8 +192,6 @@ namespace IDAStar
                     }
                     catch (Exception exc) // nic z powyzszych
                     {
-                        //Console.WriteLine("Wezel w find");
-                        //Console.WriteLine(exc.ToString());
                         return new List<Wezel>();
                     }
                 }

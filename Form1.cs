@@ -21,9 +21,11 @@ namespace IDAStar
         public bool wybranyKoniec = true;
         public Wezel wezelPoczatkowy;
         public Wezel wezelKoncowy;
-        List<Wezel> wezlyWyszukane;
-        IDAStar ida;
-        List<Wezel> listaTmp;
+        public List<Wezel> wezlyWyszukane;
+        public IDAStar ida;
+        public List<Wezel> listaTmp;
+        public bool sciezkaWyszukiwana = false;
+
 
         public Form1()
         {            
@@ -116,7 +118,7 @@ namespace IDAStar
             }
         }
 
-        public void HandleSomethingHappening(object sender, EventArgs e)
+        public void zdarzenieZmianyBadanejSciezki(object sender, EventArgs e)
         {
             listaTmp = sender as List<Wezel>;
         }
@@ -124,6 +126,7 @@ namespace IDAStar
         private void button2_Click(object sender, EventArgs e)
         {
             if (labirynt == null) return;
+
             Control.ControlCollection kontrolki = panel1.Controls;
             if (monitorujCheckBox.Checked)
             {
@@ -142,6 +145,7 @@ namespace IDAStar
 
             Thread watek = new Thread(() =>
             {
+                sciezkaWyszukiwana = true;
                 double kosztAkcji = (Double)kosztAkcjiNumeric.Value;
                 
                 // z opoznieniem i sledzeniem zmian
@@ -155,47 +159,66 @@ namespace IDAStar
                     ida = new IDAStar(wezelPoczatkowy.x, wezelPoczatkowy.y, wezelKoncowy.x, wezelKoncowy.y, labirynt, sprawdzRadio(), kosztAkcji,0);
                 }
 
-                ida.SomethingHappened += HandleSomethingHappening;
-                wezlyWyszukane = ida.szukajSciezki(wezelPoczatkowy.x, wezelPoczatkowy.y, wezelKoncowy.x, wezelKoncowy.y, labirynt);
+                ida.zglosZdarzenie += zdarzenieZmianyBadanejSciezki;
+
+                powodzeniaTextBox.Text = "...";
+                niepowodzeniaTextBox.Text = "...";
+                sredniaDlugoscSciezkiTextBox.Text = "...";
+                iloscRozwinietychWezlowTextBox.Text = "...";
+
+                if (maxCzasWykonaniaCheckBox.Checked)
+                {
+                    int maxCzasWykonania = (Int32)maxCzasNumeric.Value;
+                    wezlyWyszukane = ida.szukajSciezki(wezelPoczatkowy.x, wezelPoczatkowy.y, wezelKoncowy.x, wezelKoncowy.y, labirynt, maxCzasWykonania);
+                }
+                else
+                {
+                    wezlyWyszukane = ida.szukajSciezki(wezelPoczatkowy.x, wezelPoczatkowy.y, wezelKoncowy.x, wezelKoncowy.y, labirynt);
+                }               
             
                 if(wezlyWyszukane.Count == 0)
                 {
-                    //textBox1.Text = "Nie da sie";
+                    if (ida.uplynalCzasWykonywania)
+                    {
+                        powodzeniaTextBox.Text = ida.maxCzasWykonania + "s minęło";
+                        niepowodzeniaTextBox.Text = ida.maxCzasWykonania + "s minęło";
+                        sredniaDlugoscSciezkiTextBox.Text = ida.maxCzasWykonania + "s minęło";
+                        iloscRozwinietychWezlowTextBox.Text = ida.maxCzasWykonania + "s minęło";
+                    }
+                    else
+                    {
+                        powodzeniaTextBox.Text = "-";
+                        niepowodzeniaTextBox.Text = "-";
+                        sredniaDlugoscSciezkiTextBox.Text = "-";
+                        iloscRozwinietychWezlowTextBox.Text = "-";
+                    }
                 }
                 else
                 {
                     wezlyWyszukane.RemoveAt(0);
                     wezlyWyszukane.RemoveAt(0);
 
-                    using (StreamWriter writer = new StreamWriter("wynik.txt"))
+                    foreach (Wezel w in wezlyWyszukane)
                     {
-                        foreach (Wezel w in wezlyWyszukane)
+                        foreach (Control kontrolka in kontrolki)
                         {
-                            writer.WriteLine(w.x + " " + w.y);
-                            foreach (Control kontrolka in kontrolki)
+                            Wezel wezelKontrolka = (Wezel)kontrolka.Tag;
+                            if (wezelKontrolka.x.Equals(w.x) && wezelKontrolka.y.Equals(w.y))
                             {
-                                Wezel wezelKontrolka = (Wezel)kontrolka.Tag;
-                                if (wezelKontrolka.x.Equals(w.x) && wezelKontrolka.y.Equals(w.y))
-                                {
-                                    kontrolka.BackColor = Color.Yellow;
-                                }
+                                kontrolka.BackColor = Color.Yellow;
                             }
                         }
                     }
+
+                    powodzeniaTextBox.Text = ida.iloscPowodzen.ToString();
+                    niepowodzeniaTextBox.Text = ida.iloscNiepowodzen.ToString();
+                    sredniaDlugoscSciezkiTextBox.Text = ((Double)ida.lacznaDlugoscSciezki / (ida.iloscNiepowodzen + ida.iloscPowodzen)).ToString();
+                    iloscRozwinietychWezlowTextBox.Text = ida.wezlyOdwiedzone.ToString();
+                    sciezkaWyszukiwana = false;
                 }
-                //ThreadDone(this, EventArgs.Empty);
-                textBox1.Text = ida.iloscPowodzen.ToString();
-                textBox2.Text = ida.iloscNiepowodzen.ToString();
-                textBox3.Text = ((Double)ida.lacznaDlugoscSciezki / (ida.iloscNiepowodzen + ida.iloscPowodzen)).ToString();
-                //textBox4.Text = (ida.resetowanaSciezka-1).ToString();
-                textBox5.Text = ida.wezlyOdwiedzone.ToString();
             });
             
             watek.Start();
-
-           // watek.Join();
-            
-            //watek.Join()
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -212,16 +235,16 @@ namespace IDAStar
             wezelPoczatkowy = null;
             wezlyWyszukane = null;
             ida = null;
-            textBox1.Text = "";
-            textBox2.Text = "";
-            textBox3.Text = "";
-            //textBox4.Text = "";
-            textBox5.Text = "";
+            powodzeniaTextBox.Text = "";
+            niepowodzeniaTextBox.Text = "";
+            sredniaDlugoscSciezkiTextBox.Text = "";
+            iloscRozwinietychWezlowTextBox.Text = "";
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (ida == null || listaTmp == null || !monitorujCheckBox.Checked) return;
+            if (!sciezkaWyszukiwana) return;
 
             Control.ControlCollection kontrolki = panel2.Controls;
             List<Wezel> zablokowane = ida.labirynt.pobierzZablokowane();
@@ -267,7 +290,6 @@ namespace IDAStar
                     kontrolka.BackColor = Color.Green;
                 }
             }
-            //textBox1.Text = "subscribe " + listaTmp.Count;
         }
     }
 }

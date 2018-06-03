@@ -44,21 +44,25 @@
             this.kosztAkcjiNumeric = new System.Windows.Forms.NumericUpDown();
             this.panel2 = new System.Windows.Forms.Panel();
             this.monitorujCheckBox = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.powodzeniaTextBox = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.opoznienieNumeric = new System.Windows.Forms.NumericUpDown();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.niepowodzeniaTextBox = new System.Windows.Forms.TextBox();
+            this.sredniaDlugoscSciezkiTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.iloscRozwinietychWezlowTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.maxCzasWykonaniaCheckBox = new System.Windows.Forms.CheckBox();
+            this.maxCzasNumeric = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.wymiaryNumeric)).BeginInit();
             this.heurystykaPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kosztAkcjiNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.opoznienieNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxCzasNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -72,7 +76,7 @@
             // 
             this.generujButton.Location = new System.Drawing.Point(425, 57);
             this.generujButton.Name = "generujButton";
-            this.generujButton.Size = new System.Drawing.Size(75, 23);
+            this.generujButton.Size = new System.Drawing.Size(100, 23);
             this.generujButton.TabIndex = 1;
             this.generujButton.Text = "Generuj";
             this.generujButton.UseVisualStyleBackColor = true;
@@ -80,9 +84,9 @@
             // 
             // szukajButton
             // 
-            this.szukajButton.Location = new System.Drawing.Point(322, 102);
+            this.szukajButton.Location = new System.Drawing.Point(322, 156);
             this.szukajButton.Name = "szukajButton";
-            this.szukajButton.Size = new System.Drawing.Size(94, 55);
+            this.szukajButton.Size = new System.Drawing.Size(97, 55);
             this.szukajButton.TabIndex = 3;
             this.szukajButton.Text = "Wyznacz Ścieżkę";
             this.szukajButton.UseVisualStyleBackColor = true;
@@ -101,7 +105,7 @@
             // 
             this.wymiaryNumeric.Location = new System.Drawing.Point(425, 31);
             this.wymiaryNumeric.Name = "wymiaryNumeric";
-            this.wymiaryNumeric.Size = new System.Drawing.Size(71, 20);
+            this.wymiaryNumeric.Size = new System.Drawing.Size(100, 20);
             this.wymiaryNumeric.TabIndex = 5;
             this.wymiaryNumeric.Value = new decimal(new int[] {
             5,
@@ -163,9 +167,9 @@
             // 
             // resetujButton
             // 
-            this.resetujButton.Location = new System.Drawing.Point(322, 163);
+            this.resetujButton.Location = new System.Drawing.Point(425, 188);
             this.resetujButton.Name = "resetujButton";
-            this.resetujButton.Size = new System.Drawing.Size(94, 23);
+            this.resetujButton.Size = new System.Drawing.Size(100, 23);
             this.resetujButton.TabIndex = 9;
             this.resetujButton.Text = "Resetuj";
             this.resetujButton.UseVisualStyleBackColor = true;
@@ -174,7 +178,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(422, 150);
+            this.label1.Location = new System.Drawing.Point(422, 83);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 10;
@@ -183,7 +187,7 @@
             // kosztAkcjiNumeric
             // 
             this.kosztAkcjiNumeric.DecimalPlaces = 2;
-            this.kosztAkcjiNumeric.Location = new System.Drawing.Point(425, 166);
+            this.kosztAkcjiNumeric.Location = new System.Drawing.Point(425, 99);
             this.kosztAkcjiNumeric.Maximum = new decimal(new int[] {
             10,
             0,
@@ -195,7 +199,7 @@
             0,
             0});
             this.kosztAkcjiNumeric.Name = "kosztAkcjiNumeric";
-            this.kosztAkcjiNumeric.Size = new System.Drawing.Size(94, 20);
+            this.kosztAkcjiNumeric.Size = new System.Drawing.Size(100, 20);
             this.kosztAkcjiNumeric.TabIndex = 11;
             this.kosztAkcjiNumeric.Value = new decimal(new int[] {
             1,
@@ -213,19 +217,19 @@
             // monitorujCheckBox
             // 
             this.monitorujCheckBox.AutoSize = true;
-            this.monitorujCheckBox.Location = new System.Drawing.Point(425, 87);
+            this.monitorujCheckBox.Location = new System.Drawing.Point(425, 122);
             this.monitorujCheckBox.Name = "monitorujCheckBox";
             this.monitorujCheckBox.Size = new System.Drawing.Size(107, 17);
             this.monitorujCheckBox.TabIndex = 12;
             this.monitorujCheckBox.Text = "monitoruj ścieżkę";
             this.monitorujCheckBox.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // powodzeniaTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(322, 216);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 13;
+            this.powodzeniaTextBox.Location = new System.Drawing.Point(322, 251);
+            this.powodzeniaTextBox.Name = "powodzeniaTextBox";
+            this.powodzeniaTextBox.Size = new System.Drawing.Size(94, 20);
+            this.powodzeniaTextBox.TabIndex = 13;
             // 
             // timer1
             // 
@@ -235,7 +239,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(422, 107);
+            this.label2.Location = new System.Drawing.Point(422, 142);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 14;
@@ -248,7 +252,7 @@
             0,
             0,
             0});
-            this.opoznienieNumeric.Location = new System.Drawing.Point(425, 127);
+            this.opoznienieNumeric.Location = new System.Drawing.Point(425, 162);
             this.opoznienieNumeric.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -263,24 +267,24 @@
             0,
             0});
             // 
-            // textBox2
+            // niepowodzeniaTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(322, 255);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 16;
+            this.niepowodzeniaTextBox.Location = new System.Drawing.Point(322, 292);
+            this.niepowodzeniaTextBox.Name = "niepowodzeniaTextBox";
+            this.niepowodzeniaTextBox.Size = new System.Drawing.Size(94, 20);
+            this.niepowodzeniaTextBox.TabIndex = 16;
             // 
-            // textBox3
+            // sredniaDlugoscSciezkiTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(429, 213);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 17;
+            this.sredniaDlugoscSciezkiTextBox.Location = new System.Drawing.Point(425, 251);
+            this.sredniaDlugoscSciezkiTextBox.Name = "sredniaDlugoscSciezkiTextBox";
+            this.sredniaDlugoscSciezkiTextBox.Size = new System.Drawing.Size(100, 20);
+            this.sredniaDlugoscSciezkiTextBox.TabIndex = 17;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(322, 197);
+            this.label3.Location = new System.Drawing.Point(324, 235);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 18;
@@ -289,7 +293,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(322, 239);
+            this.label4.Location = new System.Drawing.Point(324, 277);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(94, 13);
             this.label4.TabIndex = 19;
@@ -298,7 +302,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(429, 197);
+            this.label5.Location = new System.Drawing.Point(422, 235);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(116, 13);
             this.label5.TabIndex = 20;
@@ -307,34 +311,78 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(429, 239);
+            this.label7.Location = new System.Drawing.Point(422, 277);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(127, 13);
             this.label7.TabIndex = 24;
             this.label7.Text = "ilosc rozwinietych wezlow";
             // 
-            // textBox5
+            // iloscRozwinietychWezlowTextBox
             // 
-            this.textBox5.Location = new System.Drawing.Point(428, 255);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 23;
+            this.iloscRozwinietychWezlowTextBox.Location = new System.Drawing.Point(425, 292);
+            this.iloscRozwinietychWezlowTextBox.Name = "iloscRozwinietychWezlowTextBox";
+            this.iloscRozwinietychWezlowTextBox.Size = new System.Drawing.Size(100, 20);
+            this.iloscRozwinietychWezlowTextBox.TabIndex = 23;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(389, 222);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(73, 13);
+            this.label6.TabIndex = 25;
+            this.label6.Text = "STATYSTYKI";
+            // 
+            // maxCzasWykonaniaCheckBox
+            // 
+            this.maxCzasWykonaniaCheckBox.AutoSize = true;
+            this.maxCzasWykonaniaCheckBox.Location = new System.Drawing.Point(322, 99);
+            this.maxCzasWykonaniaCheckBox.Name = "maxCzasWykonaniaCheckBox";
+            this.maxCzasWykonaniaCheckBox.Size = new System.Drawing.Size(84, 17);
+            this.maxCzasWykonaniaCheckBox.TabIndex = 26;
+            this.maxCzasWykonaniaCheckBox.Text = "max czas (s)";
+            this.maxCzasWykonaniaCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // maxCzasNumeric
+            // 
+            this.maxCzasNumeric.Location = new System.Drawing.Point(322, 119);
+            this.maxCzasNumeric.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.maxCzasNumeric.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.maxCzasNumeric.Name = "maxCzasNumeric";
+            this.maxCzasNumeric.Size = new System.Drawing.Size(94, 20);
+            this.maxCzasNumeric.TabIndex = 27;
+            this.maxCzasNumeric.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(870, 346);
+            this.Controls.Add(this.maxCzasNumeric);
+            this.Controls.Add(this.maxCzasWykonaniaCheckBox);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.iloscRozwinietychWezlowTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.sredniaDlugoscSciezkiTextBox);
+            this.Controls.Add(this.niepowodzeniaTextBox);
             this.Controls.Add(this.opoznienieNumeric);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.powodzeniaTextBox);
             this.Controls.Add(this.monitorujCheckBox);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.kosztAkcjiNumeric);
@@ -353,6 +401,7 @@
             this.heurystykaPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kosztAkcjiNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.opoznienieNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxCzasNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -375,17 +424,20 @@
         private System.Windows.Forms.NumericUpDown kosztAkcjiNumeric;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox monitorujCheckBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox powodzeniaTextBox;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown opoznienieNumeric;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox niepowodzeniaTextBox;
+        private System.Windows.Forms.TextBox sredniaDlugoscSciezkiTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox iloscRozwinietychWezlowTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox maxCzasWykonaniaCheckBox;
+        private System.Windows.Forms.NumericUpDown maxCzasNumeric;
     }
 }
 
