@@ -161,25 +161,33 @@ namespace IDAStar
 
                 ida.zglosZdarzenie += zdarzenieZmianyBadanejSciezki;
 
+                timeTextBox.Text = "...";
                 powodzeniaTextBox.Text = "...";
                 niepowodzeniaTextBox.Text = "...";
                 sredniaDlugoscSciezkiTextBox.Text = "...";
                 iloscRozwinietychWezlowTextBox.Text = "...";
 
+                DateTime data1,data2;
+
                 if (maxCzasWykonaniaCheckBox.Checked)
                 {
                     int maxCzasWykonania = (Int32)maxCzasNumeric.Value;
+                    data1 = DateTime.Now;
                     wezlyWyszukane = ida.szukajSciezki(wezelPoczatkowy.x, wezelPoczatkowy.y, wezelKoncowy.x, wezelKoncowy.y, labirynt, maxCzasWykonania);
+                    data2 = DateTime.Now;
                 }
                 else
                 {
+                    data1 = DateTime.Now;
                     wezlyWyszukane = ida.szukajSciezki(wezelPoczatkowy.x, wezelPoczatkowy.y, wezelKoncowy.x, wezelKoncowy.y, labirynt);
-                }               
+                    data2 = DateTime.Now;
+                }
             
                 if(wezlyWyszukane.Count == 0)
                 {
                     if (ida.uplynalCzasWykonywania)
                     {
+                        timeTextBox.Text = ida.maxCzasWykonania + "s minęło";
                         powodzeniaTextBox.Text = ida.maxCzasWykonania + "s minęło";
                         niepowodzeniaTextBox.Text = ida.maxCzasWykonania + "s minęło";
                         sredniaDlugoscSciezkiTextBox.Text = ida.maxCzasWykonania + "s minęło";
@@ -187,6 +195,7 @@ namespace IDAStar
                     }
                     else
                     {
+                        timeTextBox.Text = "-";
                         powodzeniaTextBox.Text = "-";
                         niepowodzeniaTextBox.Text = "-";
                         sredniaDlugoscSciezkiTextBox.Text = "-";
@@ -210,6 +219,7 @@ namespace IDAStar
                         }
                     }
 
+                    timeTextBox.Text = Math.Ceiling((data2 - data1).TotalMilliseconds).ToString();
                     powodzeniaTextBox.Text = ida.iloscPowodzen.ToString();
                     niepowodzeniaTextBox.Text = ida.iloscNiepowodzen.ToString();
                     sredniaDlugoscSciezkiTextBox.Text = ((Double)ida.lacznaDlugoscSciezki / (ida.iloscNiepowodzen + ida.iloscPowodzen)).ToString();
@@ -235,6 +245,7 @@ namespace IDAStar
             wezelPoczatkowy = null;
             wezlyWyszukane = null;
             ida = null;
+            timeTextBox.Text = "";
             powodzeniaTextBox.Text = "";
             niepowodzeniaTextBox.Text = "";
             sredniaDlugoscSciezkiTextBox.Text = "";
